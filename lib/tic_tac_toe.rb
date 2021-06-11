@@ -1,6 +1,9 @@
-require "tic_tac_toe/version"
+require_relative "player.rb"
+require_relative "board.rb"
+require_relative "game.rb"
+require_relative "dialogue.rb"
 
-module TicTacToe
-  class Error < StandardError; end
-  # Your code goes here...
-end
+test = Board.new
+test.display_board
+puts greeting
+
