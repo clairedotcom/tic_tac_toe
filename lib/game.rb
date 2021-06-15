@@ -3,7 +3,7 @@ require_relative "dialogue.rb"
 class Game
     include Dialogue
     
-    attr_reader :current_player, :computer_player, :human_player
+    attr_accessor :current_player, :computer_player, :human_player
     
     def initialize
         @board = Board.new
@@ -21,17 +21,17 @@ class Game
         randomize_first_player
         board.display_board
         move = solicit_move
-        board.set_move(move)
+        board.update_board(move,@current_player.marker)
         board.display_board
     end    
 
     def randomize_first_player
         number = rand(2)
         if number == 1
-            current_player = @computer_player
+            @current_player = @computer_player
             puts "#{@computer_player.name} will go first.\n"
         else
-            current_player = @human_player
+            @current_player = @human_player
             puts "#{@human_player.name} will go first.\n"
         end  
     end
@@ -39,7 +39,11 @@ class Game
     #solicit move from human player
     def solicit_move
         puts "Please enter a number between 1 and 9 to move."
-        gets.chomp.to_i
-    end    
+        return gets.chomp.to_i
+    end 
+    
+    #def set_move(a,b)
+    #    board.update(a,b)
+    #end    
 
 end 

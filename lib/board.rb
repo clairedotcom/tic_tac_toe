@@ -14,8 +14,8 @@ class Board
         puts "#{row_one}\n#{row_two}\n#{row_three}"
     end
 
-    def set_move(move)
-        grid[move-1] = current_player.marker
+    def update_board(move,marker)
+       @grid[move-1] = marker
         #if current_player = human_player
          #   grid[move-1].value = "X"
         #elsif current_player = computer_player
