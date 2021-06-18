@@ -15,17 +15,22 @@ class Board
     end
 
     def update_board(move,marker)
-       @grid[move-1] = marker
-        #if current_player = human_player
-         #   grid[move-1].value = "X"
-        #elsif current_player = computer_player
-        #    grid[move-1].value = "O"    
-        #end    
+       @grid[move-1] = marker   
     end    
     
-    def has_won?
+    def has_won?(player)
         WINS.any? do |combo|
-            combo.all? {|position| @grid[position] == player.marker}
+            combo.all? {|position| @grid[position+1] == player.marker}
         end
-    end    
+    end
+    
+    #returns true if available
+    def is_available?(move)
+        @grid[move-1].is_a? Integer
+    end 
+    
+    #def is_full?
+
+    #end    
+
 end    
