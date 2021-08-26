@@ -12,42 +12,41 @@ class Game
     end
     
     def play
-        puts greeting
-        board = @board
-        puts say_random_player
+        greeting
         current_player = randomize_first_player
         puts "#{current_player.name} will go first.\n"
-        board.display_board
-        until board.has_won?(@human_player) || board.has_won?(@computer_player) do   
-            if board.is_full?
+        @board.display_board
+        
+        until @board.has_won?(@human_player) || @board.has_won?(@computer_player) do   
+            if @board.is_full?
                 puts "It's a draw!"
                 break
-            end    
+            end
+
             move = solicit_move(current_player)
             puts "#{current_player.name} selects #{move}."
-              if board.is_available?(move)
-                board.update_board(move,current_player.marker)
+              
+            if @board.is_available?(move)
+                @board.update_board(move,current_player.marker)
               else
                 puts "That move is already taken. Please select another square."
                 move = solicit_move(current_player)
-                board.update_board(move,current_player.marker)
-              end  
-            board.display_board
-            if board.has_won?(@human_player) || board.has_won?(@computer_player)
+                @board.update_board(move,current_player.marker)
+              end 
+
+            @board.display_board
+            
+            if @board.has_won?(@human_player) || @board.has_won?(@computer_player)
                 puts "#{current_player.name} has won!"
-            end    
+            end
+
             current_player = switch_player(current_player)
         end
         
     end   
 
     def randomize_first_player
-        number = rand(2)
-        if number == 1
-            return @computer_player
-        else
-            return @human_player
-        end
+        rand(2) == 1 ? @computer_player : @human_player
     end
 
     def solicit_move(current_player)
@@ -56,7 +55,7 @@ class Game
             return gets.chomp.to_i
         else
             move = rand(1..9)
-            until board.is_available?(move) do 
+            until @board.is_available?(move) do 
                 move = rand(1..9)
             end
             return move    
@@ -64,6 +63,6 @@ class Game
     end
     
     def switch_player(current_player)
-        (current_player == @human_player) ? @computer_player : @human_player
+        current_player == @human_player ? @computer_player : @human_player
     end   
 end 

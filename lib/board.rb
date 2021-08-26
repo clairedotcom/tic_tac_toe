@@ -11,7 +11,7 @@ class Board
         row_one = "#{grid[0]} | #{grid[1]} | #{grid[2]}"
         row_two = "#{grid[3]} | #{grid[4]} | #{grid[5]}"
         row_three = "#{grid[6]} | #{grid[7]} | #{grid[8]}"
-        puts "#{row_one}\n#{row_two}\n#{row_three}"
+        puts "#{row_one}\n#{row_two}\n#{row_three}\n"
     end
 
     def update_board(move,marker)
