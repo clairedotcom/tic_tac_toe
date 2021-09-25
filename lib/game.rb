@@ -1,10 +1,4 @@
-require_relative "dialogue.rb"
-
 class Game
-    include Dialogue
-    
-    attr_reader :board, :computer_player, :human_player
-    
     def initialize(board = Board.new)
         @board = board
         @computer_player = Player.new("Human","X")
@@ -23,6 +17,11 @@ class Game
         end
     end   
 
+    def greeting
+        puts "Welcome to Tic Tac Toe!"
+        puts "We will randomly choose which player goes first.\n"
+    end    
+    
     def draw?
         if @board.is_full?
             puts "It's a draw!"
