@@ -2,6 +2,18 @@ require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
 
 describe Board do
+    describe '#update_board' do
+        subject(:board_update) { described_class.new}
+
+        context 'when move is 3 and marker is X' do
+            it 'changes grid[2] to X' do
+                move = 3
+                marker = "X"
+                expect{board_update.update_board(move,marker)}.to change { board_update.grid[2] }.to("X")
+            end
+        end
+    end
+    
     describe '#has_won?' do
         
         let (:winning_player) { instance_double(Player, marker: "X")}
@@ -39,6 +51,27 @@ describe Board do
 
             it 'returns false' do
                 expect(game_not_over.has_won?(winning_player)).to be false
+            end
+        end
+    end
+
+    describe '#is_full?' do
+
+        context 'when the board is full' do
+            
+            subject(:board_full) { described_class.new(["X", "O", "O", "X", "X","O","O", "X", "O"])}
+
+            it 'returns true' do
+                expect(board_full.is_full?).to be true
+            end
+        end
+
+        context 'when the board is not full' do
+            
+            subject(:board_not_full) { described_class.new(["X", 2, 3, 4, 5, 6, 7, 8, 9])}
+
+            it 'returns false' do
+                expect(board_not_full.is_full?).to be false
             end
         end
     end
