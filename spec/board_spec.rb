@@ -1,0 +1,45 @@
+require_relative '../lib/board.rb'
+require_relative '../lib/player.rb'
+
+describe Board do
+    describe '#has_won?' do
+        
+        let (:winning_player) { instance_double(Player, marker: "X")}
+
+        context 'when the whole top row contains one marker' do
+            
+            subject(:game_top_row) { described_class.new(["X","X","X",4,5,6,7,8,9])}
+            
+            it 'returns true' do
+                expect(game_top_row.has_won?(winning_player)).to be true
+            end    
+        end
+
+        context 'when a whole diagonal row contains one marker' do
+            
+            subject(:game_diagonal) { described_class.new(["X", 2, 3, 4, "X", 6, 7, 8, "X"])}
+
+            it 'returns true' do
+                expect(game_diagonal.has_won?(winning_player)).to be true
+            end
+        end
+
+        context 'when a whole column contains one marker' do
+            
+            subject(:game_column) { described_class.new(["X", 2, 3, "X", 5, 6, "X", 8, 9])}
+
+            it 'returns true' do
+                expect(game_column.has_won?(winning_player)).to be true
+            end
+        end
+
+        context 'when no player has marked three squares in a row' do
+            
+            subject(:game_not_over) { described_class.new(["X", 2, "X", 4, 5, "X", 7, "X", 9])}
+
+            it 'returns false' do
+                expect(game_not_over.has_won?(winning_player)).to be false
+            end
+        end
+    end
+end
