@@ -17,10 +17,15 @@ class Game
         end
     end   
 
-    def greeting
-        puts "Welcome to Tic Tac Toe!"
-        puts "We will randomly choose which player goes first.\n"
-    end    
+    def randomize_first_player
+        rand(2) == 1 ? @current_player = @computer_player : @current_player = @human_player
+        puts "#{@current_player.name} will go first.\n"
+        @board.display_board
+    end
+
+    def game_over?
+        return true if @board.has_won?(@human_player) || @board.has_won?(@computer_player)
+    end 
     
     def draw?
         if @board.is_full?
@@ -30,7 +35,9 @@ class Game
     end    
     
     def turn
-        move = solicit_move
+        move = solicit_move if @current_player.name == "Human"
+        move = computer_move if @current_player.name == "Computer"
+        
         puts "#{@current_player.name} selects #{move}."
 
         if @board.is_available?(move)
@@ -48,30 +55,41 @@ class Game
         end
     end    
     
-    def game_over?
-        return true if @board.has_won?(@human_player) || @board.has_won?(@computer_player)
-    end    
-    
-    def randomize_first_player
-        rand(2) == 1 ? @current_player = @computer_player : @current_player = @human_player
-        puts "#{@current_player.name} will go first.\n"
-        @board.display_board
-    end
-
-    def solicit_move
-        if @current_player.name == "Human"
-            puts "Please enter a number between 1 and 9 to move."
-            return gets.chomp.to_i
-        else
-            move = rand(1..9)
-            until @board.is_available?(move) do 
-                move = rand(1..9)
-            end
-            return move    
-        end        
-    end
-    
     def switch_player
         @current_player == @human_player ? @current_player = @computer_player : @current_player = @human_player
     end   
+    
+
+    def solicit_move
+        puts "Please enter a number between 1 and 9 to move."
+            
+        loop do
+            user_input = gets.chomp.to_i
+            return user_input if valid_input?(user_input)
+            
+            puts "Input Error. Please enter a number between 1 and 9."
+        end        
+    end
+
+    def valid_input?(input)
+        return true if input >0 && input < 10
+    end 
+    
+    def computer_move
+        move = rand(1..9)
+        until @board.is_available?(move) do 
+            move = rand(1..9)
+        end
+            
+        return move
+    end            
+
+
+    private
+
+    def greeting
+        puts "Welcome to Tic Tac Toe!"
+        puts "We will randomly choose which player goes first.\n"
+    end
+
 end 
