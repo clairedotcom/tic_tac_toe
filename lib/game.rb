@@ -61,18 +61,18 @@ class Game
     
 
     def solicit_move
-        puts "Please enter a number between 1 and 9 to move."
+        #p "Please enter a number between 1 and 9 to move.\n"
             
         loop do
-            user_input = gets.chomp.to_i
-            return user_input if valid_input?(user_input)
+            user_input = gets.chomp
+            return user_input.to_i if valid_input?(user_input.to_i)
             
-            puts "Input Error. Please enter a number between 1 and 9."
+            puts "Invalid input. Please enter a number between 1 and 9."
         end        
     end
 
     def valid_input?(input)
-        return true if input >0 && input < 10
+        return true if input > 0 && input < 10
     end 
     
     def computer_move
