@@ -1,8 +1,8 @@
 class Game
     def initialize(board = Board.new)
         @board = board
-        @computer_player = Player.new("Human","X")
-        @human_player = Player.new("Computer","O")
+        @computer_player = Player.new("Computer","X")
+        @human_player = Player.new("Human","O")
         @current_player = nil
     end
     
@@ -35,55 +35,52 @@ class Game
     end    
     
     def turn
-        move = solicit_move if @current_player.name == "Human"
-        move = computer_move if @current_player.name == "Computer"
+        if @current_player == @human_player
+            puts "Please enter a number between 1 and 9 to move.\n"
+            move = solicit_move 
+        end
+
+        move = computer_move if @current_player.name == @computer_player.name
         
         puts "#{@current_player.name} selects #{move}."
-
-        if @board.is_available?(move)
-            @board.update_board(move,@current_player.marker)
-        else
-            puts "That move is already taken. Please select another square."
-            move = solicit_move
-            @board.update_board(move,@current_player.marker)
-        end 
-
+        
+        @board.update_board(move, @current_player.marker)
         @board.display_board
 
-        if game_over?
-            puts "#{@current_player.name} has won!"
-        end
+        puts "#{@current_player.name} has won!" if game_over?
     end    
     
     def switch_player
         @current_player == @human_player ? @current_player = @computer_player : @current_player = @human_player
-    end   
-    
+    end
 
     def solicit_move
-        #p "Please enter a number between 1 and 9 to move.\n"
-            
         loop do
             user_input = gets.chomp
-            return user_input.to_i if valid_input?(user_input.to_i)
+            integer_input = user_input.to_i
             
-            puts "Invalid input. Please enter a number between 1 and 9."
-        end        
+            return integer_input if valid_input?(integer_input) && @board.is_available?(integer_input)
+
+            if @board.is_available?(integer_input) == false
+                puts "That square is taken. Please select another one: "
+            else
+                puts "Invalid input. Please enter a number between 1 and 9."
+            end
+        end
     end
 
     def valid_input?(input)
         return true if input > 0 && input < 10
-    end 
+        return false
+    end
     
     def computer_move
         move = rand(1..9)
         until @board.is_available?(move) do 
             move = rand(1..9)
-        end
-            
+        end    
         return move
-    end            
-
+    end
 
     private
 

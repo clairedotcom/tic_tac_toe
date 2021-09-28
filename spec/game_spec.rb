@@ -3,9 +3,9 @@ require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
 
 describe Game do
+    subject(:game_input) { described_class.new}
+    
     describe '#solicit_move' do
-        subject(:game_input) { described_class.new}
-        
         context 'when input is a string with a number between 1 and 9' do
             before do
                 valid_input = "3"
@@ -33,4 +33,22 @@ describe Game do
            end
         end
     end
+
+    describe '#valid_input?' do
+        context 'when the input is 11' do
+            it 'returns false' do
+                invalid_input = 11
+                expect(game_input.valid_input?(invalid_input)).to be false
+            end    
+        end
+
+        context 'when the input is between 1 and 9' do
+            it 'returns true' do
+                input = 3
+                expect(game_input.valid_input?(input)).to be true
+            end
+        end        
+    end
+    
+    
 end
