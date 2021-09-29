@@ -8,10 +8,17 @@ class Board
     end
 
     def display_board
-        row_one = "#{grid[0]} | #{grid[1]} | #{grid[2]}"
-        row_two = "#{grid[3]} | #{grid[4]} | #{grid[5]}"
-        row_three = "#{grid[6]} | #{grid[7]} | #{grid[8]}"
-        puts "#{row_one}\n#{row_two}\n#{row_three}\n"
+        board = <<~DISPLAY
+        
+        #{grid[0]} | #{grid[1]} | #{grid[2]}
+        ----------
+        #{grid[3]} | #{grid[4]} | #{grid[5]}
+        ----------
+        #{grid[6]} | #{grid[7]} | #{grid[8]}
+        
+        DISPLAY
+        
+        puts board
     end
 
     def update_board(move,marker)
