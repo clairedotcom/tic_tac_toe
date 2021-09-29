@@ -3,12 +3,11 @@ class Game
         @board = board
         @computer_player = Player.new("Computer","X")
         @human_player = Player.new("Human","O")
-        @current_player = nil
+        @current_player = randomize_first_player
     end
     
     def play
         greeting
-        randomize_first_player
         
         until game_over? do
             break if draw?
@@ -19,8 +18,6 @@ class Game
 
     def randomize_first_player
         rand(2) == 1 ? @current_player = @computer_player : @current_player = @human_player
-        puts "#{@current_player.name} will go first.\n"
-        @board.display_board
     end
 
     def game_over?
@@ -87,6 +84,8 @@ class Game
     def greeting
         puts "Welcome to Tic Tac Toe!"
         puts "We will randomly choose which player goes first.\n"
+        puts "#{@current_player.name} will go first.\n"
+        @board.display_board
     end
 
 end 

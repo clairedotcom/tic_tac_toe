@@ -75,4 +75,22 @@ describe Board do
             end
         end
     end
+
+    describe '#is_available?' do
+        subject(:board_available) { described_class.new([1, "X", 3, 4, 5, 6, 7, 8, 9])}
+                
+        context 'when a move is taken' do
+            it 'returns false' do
+                move = 2
+                expect(board_available.is_available?(move)).to be false
+            end
+        end
+
+        context 'when a move is not taked' do
+            it 'returns true' do
+                move = 3
+                expect(board_available.is_available?(move)).to be true
+            end
+        end
+    end       
 end
